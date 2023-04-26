@@ -6,3 +6,6 @@ scene:
 controller:
   MODE: video_render
   OUTPUT_VIDEO_PATH: ./video.gif
+  SPEED_MULTIPLE: 1
+view:
+  WINDOW_DIMENSIONS: [256, 256]

@@ -72,13 +72,13 @@ class VideoRenderController(Controller):
             logging.warning(msg)
 
         self.frames_left_to_render = max_frames
-        self.delta_t = frame_time[0]
+        self.delta_t = frame_time[0] * self.cfg.speed_multiple
 
     def _prep_for_run_loop(self) -> None:
         self.run_loop_start_time = time.time()
 
     def _is_run_over(self) -> bool:
-        return self.frames_left_to_render == 0
+        return self.frames_left_to_render <= 0
 
     def _start_run_loop_iteration(self) -> None:
         self.view.clear_window()
@@ -102,9 +102,9 @@ class VideoRenderController(Controller):
         self.video_writer.process_frame(self.frame_data[::-1, :, :].copy())
 
         # update our counts and progress_bar
-        self.frames_left_to_render -= 1
-        self.frames_rendered += 1
-        self.progress_bar.update(1)
+        self.frames_left_to_render -= self.cfg.speed_multiple
+        self.frames_rendered += self.cfg.speed_multiple
+        self.progress_bar.update(self.cfg.speed_multiple)
 
     def _cleanup_after_run_loop(self) -> None:
         logging.info(f'Rendered {self.frames_rendered} frames in {time.time()-self.run_loop_start_time} seconds.')

@@ -217,8 +217,18 @@ class ControllerConfig():
 
         # set timestep for user interactions in interactive mode
         try:
+            self.speed_multiple: int = controller_cfg["SPEED_MULTIPLE"]
+            assert isinstance(self.speed_multiple, int), 'is not int'
+            assert self.speed_multiple > 0, 'timestep val must be > 0'
+        except (AssertionError, ValueError) as e:
+            msg = f'Error in SPEED_MULTIPLE config parameter: {e}'
+            logging.critical(msg)
+            assert False, msg
+
+        # set timestep for user interactions in interactive mode
+        try:
             self.keyboard_timestep: Union[float, int] = controller_cfg["KEYBOARD_TIMESTEP"]
-            assert isinstance(self.keyboard_timestep, (float, int)), 'is not floar or int'
+            assert isinstance(self.keyboard_timestep, (float, int)), 'is not float or int'
             assert self.keyboard_timestep > 0, 'timestep val must be > 0'
         except (AssertionError, ValueError) as e:
             msg = f'Error in KEYBOARD_TIMESTEP config parameter: {e}'
