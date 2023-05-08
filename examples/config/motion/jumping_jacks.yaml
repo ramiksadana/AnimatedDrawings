@@ -1,6 +1,6 @@
 filepath: examples/bvh/cmu1/jumping_jacks.bvh
 start_frame_idx: 0
-end_frame_idx: 32
+end_frame_idx: 16
 groundplane_joint: LeftAnkle
 forward_perp_joint_vectors:
   - - LeftShoulder
